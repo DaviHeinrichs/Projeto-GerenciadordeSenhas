@@ -3,7 +3,7 @@
 
 password-manager/
 │
-├── core/                           # Domínio e regras de negócio
+├── bin/core/                           # Domínio e regras de negócio
 │   ├── entities/                   # Entidades principais
 │   │   ├── user.py                # Usuário + Master Password
 │   │   └── password_entry.py      # Senha criptografada + metadados
@@ -17,7 +17,7 @@ password-manager/
 │       ├── auth_exceptions.py     # Erros de autenticação
 │       └── crypto_exceptions.py  # Erros de criptografia
 │
-├── infrastructure/                # Implementações concretas
+├── bin/backend/                # Implementações concretas
 │   ├── db/
 │   │   ├── sqlcipher/            # Config SQLCipher
 │   │   │   ├── models.py        # Modelos SQLAlchemy
@@ -34,7 +34,7 @@ password-manager/
 │       ├── aes.py               # AES-256 (cryptography)
 │       └── wasm/                # Bindings WebAssembly (Fase 2)
 │
-├── interfaces/
+├── bin/interfaces/
 │   ├── web/                      # FastAPI
 │   │   ├── routers/
 │   │   │   ├── auth.py         # Autenticação
@@ -64,7 +64,7 @@ password-manager/
 │       │
 │       └── content_script/     # Auto-preenchimento (Fase 3)
 │
-├── application/                 # Serviços de aplicação
+├── bin/application/                 # Serviços de aplicação
 │   ├── services/
 │   │   ├── password_service.py # Gerencia senhas + criptografia
 │   │   └── auth_service.py    # Lógica de autenticação
@@ -86,14 +86,5 @@ password-manager/
 │   └── integration/
 │       ├── test_auth_flow.py
 │       └── test_api_endpoints.py
-│
-├── scripts/                    # Utilitários
-│   ├── deploy/                # Configuração HTTPS (Fase 2)
-│   ├── backup/               # Backups criptografados (Fase 3)
-│   └── wasm_build.sh        # Compilação WASM (Fase 2)
-│
-├── Dockerfile                 # Containerização (Fase Final)
-├── docker-compose.yml        # Nginx + Prometheus (Fase Final)
-└── README.md                # Documentação do projeto
     </pre>
 </div>
