@@ -142,3 +142,14 @@
 2. **Prioridades**:  
    - Itens marcados como **"Crítica"** devem ser implementados antes dos demais.  
    - Features opcionais (ex.: Content Script) podem ser deixadas para versões futuras. 
+
+
+
+
+
+hospedagem:
+
+ - firebase (DB users)
+ - extensão (Próprio do Chrome)
+ - site (Apache)
+ - nuvem (Só no futurao)
