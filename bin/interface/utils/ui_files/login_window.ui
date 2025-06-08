@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>LoginWindow</class>
+ <widget class="QMainWindow" name="LoginWindow">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -256,7 +256,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="FrasePrincipal">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -293,7 +293,7 @@
      <set>Qt::NoTextInteraction</set>
     </property>
    </widget>
-   <widget class="QLabel" name="image">
+   <widget class="QLabel" name="Logo">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -312,7 +312,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png</pixmap>
+     <pixmap>../project/CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -749,11 +749,11 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="emailInput">
     <property name="geometry">
      <rect>
       <x>562</x>
-      <y>120</y>
+      <y>110</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -762,14 +762,14 @@
      <string/>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="Email">
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>100</y>
+      <y>90</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -778,11 +778,11 @@
      <string>EMAIL</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="Senha">
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>150</y>
+      <y>140</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -791,11 +791,11 @@
      <string>SENHA</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="senhaInput">
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>170</y>
+      <y>160</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -807,17 +807,20 @@
      <enum>QLineEdit::Password</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="forgotPassword">
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>200</y>
+      <y>190</y>
       <width>141</width>
       <height>16</height>
      </rect>
     </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;ESQUECI MINHA SENHA&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.google.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#b68c46;&quot;&gt;ESQUECI MINHA SENHA&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; color:#b68c46;&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="textFormat">
      <enum>Qt::RichText</enum>
@@ -825,12 +828,15 @@
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
+    <property name="openExternalLinks">
+     <bool>true</bool>
+    </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="entrarButton">
     <property name="geometry">
      <rect>
       <x>600</x>
-      <y>230</y>
+      <y>220</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -839,17 +845,45 @@
      <string>ENTRAR</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="cadastroButton">
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>310</y>
+      <y>300</y>
       <width>141</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>CADASTRAR-SE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="quemSomos">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>350</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://padlet.com/g_tagawa/identidade-digital-import-ncia-de-gerenciar-e-proteger-suas--w5w921362zphc19m&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#b68c46;&quot;&gt;QUEM SOMOS?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::RichText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="openExternalLinks">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

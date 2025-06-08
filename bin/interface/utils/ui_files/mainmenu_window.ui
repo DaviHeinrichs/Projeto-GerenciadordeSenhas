@@ -221,7 +221,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="newPasswordButton">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -662,7 +662,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="myPasswordsButton">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -675,7 +675,7 @@
      <string>MINHAS SENHAS</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="changeMaster">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -688,7 +688,7 @@
      <string>ALTERAR SENHA MASTER</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="change">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -701,7 +701,7 @@
      <string>ALTERAR CADASTRO</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="generateNewPasswordBtn">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -714,7 +714,7 @@
      <string>GERAR NOVA SENHA</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="comoEstaMinhaPass">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -727,7 +727,7 @@
      <string>COMO ESTÁ MINHA SENHA?</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="exit">
     <property name="geometry">
      <rect>
       <x>90</x>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Cadastro</class>
- <widget class="QMainWindow" name="Cadastro">
+ <class>CadastroWindow</class>
+ <widget class="QMainWindow" name="CadastroWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -221,7 +221,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="nameInput">
     <property name="geometry">
      <rect>
       <x>32</x>
@@ -237,7 +237,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="lastName">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -250,7 +250,7 @@
      <string>SOBRENOME</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="name">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -263,7 +263,7 @@
      <string>NOME</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="lastnameInput">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -279,7 +279,7 @@
      <enum>QLineEdit::Normal</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="email">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -292,7 +292,7 @@
      <string>E-MAIL</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="emailInput">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -736,7 +736,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="senha">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -749,7 +749,7 @@
      <string>SENHA</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="senhaInput">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -765,7 +765,7 @@
      <enum>QLineEdit::Password</enum>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
+   <widget class="QLineEdit" name="senha2Input">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -784,7 +784,7 @@
      <enum>QLineEdit::Password</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="senha2">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -797,7 +797,7 @@
      <string>CONFIRME SUA SENHA</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="cadastrarseButton">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -810,7 +810,7 @@
      <string>CADASTRAR-SE</string>
     </property>
    </widget>
-   <widget class="QLabel" name="image">
+   <widget class="QLabel" name="Logo">
     <property name="geometry">
      <rect>
       <x>410</x>
@@ -829,7 +829,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png</pixmap>
+     <pixmap>../project/CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
