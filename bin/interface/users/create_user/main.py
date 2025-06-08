@@ -1,5 +1,6 @@
-from utils.user_id import id_gen
-from utils.user_salt import salt_gen
+import uuid
+import secrets
 
-def __main__():
-    
+def criar_usuário():
+    user_id = uuid.uuid4()
+    user_salt = secrets.token_bytes(16)
