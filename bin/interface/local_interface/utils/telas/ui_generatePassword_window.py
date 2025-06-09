@@ -251,10 +251,8 @@ class Ui_generatePassword_window(object):
         self.newPasswordButton = QtWidgets.QPushButton(self.centralwidget)
         self.newPasswordButton.setGeometry(QtCore.QRect(120, 200, 101, 31))
         self.newPasswordButton.setObjectName("newPasswordButton")
-        generatePassword_window.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(generatePassword_window)
         self.statusbar.setObjectName("statusbar")
-        generatePassword_window.setStatusBar(self.statusbar)
 
         self.retranslateUi(generatePassword_window)
         QtCore.QMetaObject.connectSlotsByName(generatePassword_window)

@@ -10,6 +10,7 @@ import os, sys
 from utils.telas.login_tela import Ui_LoginWindow
 from utils.telas.ui_cadastro_window import Ui_CadastroWindow
 from utils.telas.ui_mainmenu_window import Ui_MainWindow
+from utils.telas.ui_generatePassword_window import Ui_generatePassword_window
 
 class login(QDialog):
     def __init__(self,*args,**argvs):
@@ -62,7 +63,50 @@ class tela_principal_user(QDialog):
         super(tela_principal_user,self).__init__(*args,**argvs)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-                
+        self.ui.generateNewPasswordBtn.clicked.connect(self.tela_gerar)
+    
+    def tela_gerar(self):
+        self.hide()
+        self.tela_gen = tela_gerar()
+        self.tela_gen.show()
+        
+            
+class tela_gerar(QDialog):
+    def __init__(self,*args,**argvs):
+        super(tela_gerar,self).__init__(*args,**argvs)
+        self.ui = Ui_generatePassword_window()
+        self.ui.setupUi(self)
+        #self.ui.newPasswordButton.clicked.connect(self.gerar)
+        
+    def gerar(self):
+        import secrets
+        import string
+        import random
+
+        def gen_sequency ():
+            options = string.ascii_lowercase + string.ascii_uppercase + string.digits + "!@#$%&"
+            senha = ""
+            senha_max = 1
+
+            while senha_max<=12:
+                senha+=(secrets.choice(options))
+                senha_max +=1
+    
+                return senha
+
+        def sequency_mixer(senha):
+            options = list(senha)
+            random.shuffle(options)
+            return ''.join(options)
+            
+        sbeta = gen_sequency()
+        senha = sequency_mixer(sbeta)
+            
+        self.ui.senhaOutput.setText(str(senha))
+        
+        
+
+                      
         
             
 class cadastrar_tela(QDialog):
