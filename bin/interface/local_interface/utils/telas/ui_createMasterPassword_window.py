@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_checkPassword_window(object):
+class Ui_createmaster_window(object):
     def setupUi(self, checkPassword_window):
         checkPassword_window.setObjectName("checkPassword_window")
         checkPassword_window.resize(482, 605)
@@ -276,17 +276,17 @@ class Ui_checkPassword_window(object):
         self.Instrucoes.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Instrucoes.setWordWrap(True)
         self.Instrucoes.setObjectName("Instrucoes")
-        checkPassword_window.setCentralWidget(self.centralwidget)
+        #checkPassword_window.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(checkPassword_window)
         self.statusbar.setObjectName("statusbar")
-        checkPassword_window.setStatusBar(self.statusbar)
+        #checkPassword_window.setStatusBar(self.statusbar)
 
         self.retranslateUi(checkPassword_window)
         QtCore.QMetaObject.connectSlotsByName(checkPassword_window)
 
     def retranslateUi(self, checkPassword_window):
         _translate = QtCore.QCoreApplication.translate
-        checkPassword_window.setWindowTitle(_translate("checkPassword_window", "Como está a minha senha?"))
+        checkPassword_window.setWindowTitle(_translate("checkPassword_window", "Criando sua MasterPassword!"))
         self.CriarUmaSenha.setText(_translate("checkPassword_window", "<html><head/><body><p>Vamos criar a <span style=\" color:#b68c46;\">senha master</span></p></body></html>"))
         self.Create.setText(_translate("checkPassword_window", "CRIAR"))
         self.exit.setText(_translate("checkPassword_window", "VOLTAR"))
@@ -301,7 +301,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     checkPassword_window = QtWidgets.QMainWindow()
-    ui = Ui_checkPassword_window()
+    ui = Ui_createmaster_window()
     ui.setupUi(checkPassword_window)
     checkPassword_window.show()
     sys.exit(app.exec_())

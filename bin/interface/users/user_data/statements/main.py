@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-import os
+import os, sys
 from pathlib import Path
 
 
@@ -21,7 +21,7 @@ class User(base):
     __tablename__ = "users"
     
     user_id = Column("user_id", Integer, primary_key=True, nullable=False)
-    user_salt = Column("user_salt", String(55), nullable=False)
+    user_salt = Column("user_salt", String, nullable=False)
     role_id = Column("role_id", Integer, nullable=False)
     nome = Column("nome", String, nullable=False)
     sobrenome = Column("sobrenome", String, nullable=False)
@@ -57,10 +57,11 @@ class Info(base):
     
     user_id = Column("user_id", Integer, ForeignKey("users.user_id"), primary_key=True, nullable=False)
     hash_verify = Column("hash_verify", String, nullable=True)
+    key_salt = Column("key_salt", String, nullable=False)
     
-    
-    def __init__ (self, user_id):
+    def __init__ (self, user_id, key_salt):
         self.user_id = user_id
+        self.key_salt = key_salt
 
 class Password(base):
     __tablename__ = "passwords"
@@ -91,10 +92,17 @@ class Blocked_user(base):
         
 def criar_user(user_nome,user_sobrenome,user_email,user_senha):
     import secrets
-    from user_gen.gen_id import gerar_id
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    from interface.users.user_data.statements.user_gen.gen_id import gerar_id
+    
     user_id_gen = gerar_id()
+    
     user_salt_binary = secrets.token_bytes(16)
     user_salt_hex = user_salt_binary.hex()
+    
+    key_salt_binary = secrets.token_bytes(16)
+    key_salt_hex = key_salt_binary.hex()
+    
     
     db = create_engine(f"sqlite:///{db_file_path}")
     Session = sessionmaker(bind=db)
@@ -112,7 +120,8 @@ def criar_user(user_nome,user_sobrenome,user_email,user_senha):
         have_master=False
     )
     Info_id = Info(
-        user_id=user_id_gen
+        user_id=user_id_gen,
+        key_salt = key_salt_hex
     )
     pass_id = Password(
         user_id=user_id_gen
@@ -152,6 +161,63 @@ def check_login(used_email, used_senha):
     except:
         return False
     session.close()
+
+def get_salt(used_email):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    user = session.query(User).filter_by(email=used_email).first()
+    salt = user.user_salt
+    session.close()
+    return salt
+
+def get_id(used_email):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    user = session.query(User).filter_by(email=used_email).first()
+    id = user.user_id
+    session.close()
+    return id
+
+def turn_havemaster(used_id):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    alterar = session.query(User).filter_by(user_id=used_id).first()
+    alterar.have_master = True
+    session.add(alterar)
+    session.commit()
+    session.close()
+    
+def criar_masterpassword(used_master, used_salt, used_id):
+    from core.hash_gen.main import verification_hash_create
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    new_hash = verification_hash_create(used_master, used_salt)
+    
+    alterar = session.query(Info).filter_by(user_id=used_id).first()
+    alterar.hash_verify = new_hash
+    session.add(alterar)
+    session.commit()
+    session.close()
+
+def have_masterpassword(used_email):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    checar_master = session.query(User).filter_by(email=used_email).first()
+    tem_master = checar_master.have_master
+    session.close()
+    return tem_master
+    
+
     
 
 

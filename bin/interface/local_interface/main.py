@@ -12,7 +12,7 @@ from utils.telas.ui_cadastro_window import Ui_CadastroWindow
 from utils.telas.ui_mainmenu_windowNEW import Ui_MainWindow
 from utils.telas.ui_generatePassword_window import Ui_generatePassword_window
 from utils.telas.ui_boasVindas_window import Ui_boasvindas_window
-
+from utils.telas.ui_createMasterPassword_window import Ui_createmaster_window
 
 class login(QDialog):
     def __init__(self,*args,**argvs):
@@ -42,23 +42,78 @@ class login(QDialog):
     def tentar_logar(self):
         from utils.erro_comum import mostrar_erro
         sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../bin')))
-        from interface.users.user_data.statements.main import check_login
+        from interface.users.user_data.statements.main import check_login, have_masterpassword
         
         email = self.ui.emailInput.text()
         senha = self.ui.senhaInput.text()
         if check_login(email,senha) == True:
-            self.hide()
-            self.tela_p = tela_principal_user()
-            self.tela_p.show()
-            print("bemvindo")
+            if have_masterpassword(email) == True:
+                self.hide()
+                self.tela_p = tela_principal_user()
+                self.tela_p.show()
+                print("bemvindo")
+            elif have_masterpassword(email) == False:
+                self.hide()
+                self.tela_m = criar_masterpassword(remail=email)
+                self.tela_m.show()
+                return email
+            else:
+                mostrar_erro("Erro no Login!","Ocorreu um erro inesperado!")
+                
         if check_login(email,senha) == False:
+            self.hide()
             mostrar_erro("Erro no Login!","Email ou Senha incorretos!")
+            self.tela_l = login()
+            self.tela_l.show()
         
         
     def tela_cadastro(self):
         self.hide()
         self.tela = cadastrar_tela()
         self.tela.show()
+
+class criar_masterpassword(QDialog):
+    def __init__(self,remail,*args,**argvs):
+        super(criar_masterpassword,self).__init__(*args,**argvs)
+        self.ui = Ui_createmaster_window()
+        self.email = remail
+        self.ui.setupUi(self)
+        self.ui.generateNewPasswordBtn.clicked.connect(self.tela_gerar)
+        self.ui.exit.clicked.connect(self.voltar_login)
+        self.ui.Create.clicked.connect(self.create_master)
+        
+    def create_master(self):
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../bin')))
+        from interface.users.user_data.statements.main import get_salt, get_id, criar_masterpassword, turn_havemaster
+        user_salt = get_salt(self.email)
+        user_id = get_id(self.email)
+        senha = self.ui.senhaInput.text()
+        confirme_senha = self.ui.ConfirmaSenhaInput.text()
+        
+        if senha == confirme_senha:
+            criar_masterpassword(senha, user_salt, user_id)    
+            turn_havemaster(user_id)
+            print("masterpassword gerada")
+            self.hide()
+            self.tela_p = tela_principal_user()
+            self.tela_p.show()
+        
+        
+        
+        
+         
+    def voltar_login(self):
+        self.hide()
+        self.tela_l = login()
+        self.tela_l.show()
+        
+    def tela_gerar(self):
+        self.tela_g = tela_gerar()
+        self.tela_g.show()
+    
+    
+
+
         
         
 class tela_principal_user(QDialog):
