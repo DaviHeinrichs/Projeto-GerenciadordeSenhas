@@ -9,10 +9,7 @@ base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 db_directory = Path(base_dir)
 db_directory.mkdir(parents=True, exist_ok=True)
 
-db_file_path = db_directory / "users_base.db"
-
-
-
+db_file_path = db_directory / "database.db"
 
 db = create_engine(f"sqlite:///{db_file_path}")
 Session = sessionmaker(bind=db)
@@ -31,8 +28,9 @@ class User(base):
     email = Column("email", String, nullable=False)
     senha = Column("senha", String, nullable=False)
     ativo = Column("ativo", Boolean, nullable=False)
+    have_master = Column("have_master", Boolean, nullable=False)
     
-    def __init__ (self, user_id, user_salt, role_id, nome, sobrenome, email, senha, ativo):
+    def __init__ (self, user_id, user_salt, role_id, nome, sobrenome, email, senha, ativo,have_master):
         self.user_id = user_id
         self.user_salt = user_salt
         self.role_id = role_id
@@ -41,6 +39,7 @@ class User(base):
         self.email = email 
         self.senha = senha
         self.ativo = ativo
+        self.have_master = have_master
         
         
 class Role(base):
@@ -53,6 +52,33 @@ class Role(base):
         self.role_id = role_id
         self.role_name= role_name
 
+class Info(base):
+    __tablename__ = "infos"
+    
+    user_id = Column("user_id", Integer, ForeignKey("users.user_id"), primary_key=True, nullable=False)
+    hash_verify = Column("hash_verify", String, nullable=True)
+    
+    
+    def __init__ (self, user_id):
+        self.user_id = user_id
+
+class Password(base):
+    __tablename__ = "passwords"
+    
+    user_id = Column("user_id", Integer, ForeignKey("users.user_id"), primary_key=True)
+    pass1 = Column("pass1", String, nullable=True)
+    pass2 = Column("pass2", String, nullable=True)
+    pass3 = Column("pass3", String, nullable=True)
+    pass4 = Column("pass4", String, nullable=True)
+    pass5 = Column("pass5", String, nullable=True)
+    hash_pass1 = Column("hash_pass1", String, nullable=True)
+    hash_pass2 = Column("hash_pass2", String, nullable=True)
+    hash_pass3 = Column("hash_pass3", String, nullable=True)
+    hash_pass4 = Column("hash_pass4", String, nullable=True)
+    hash_pass5 = Column("hash_pass5", String, nullable=True)
+    
+    def __init__(self, user_id):
+        self.user_id = user_id
 
 
 class Blocked_user(base):
@@ -65,7 +91,7 @@ class Blocked_user(base):
         
 def criar_user(user_nome,user_sobrenome,user_email,user_senha):
     import secrets
-    from interface.users.user_data.statements.user_gen.gen_id import gerar_id
+    from user_gen.gen_id import gerar_id
     user_id_gen = gerar_id()
     user_salt_binary = secrets.token_bytes(16)
     user_salt_hex = user_salt_binary.hex()
@@ -82,10 +108,23 @@ def criar_user(user_nome,user_sobrenome,user_email,user_senha):
         sobrenome = user_sobrenome, 
         email = user_email, 
         senha = user_senha, 
-        ativo = True
+        ativo = True,
+        have_master=False
     )
+    Info_id = Info(
+        user_id=user_id_gen
+    )
+    pass_id = Password(
+        user_id=user_id_gen
+    )
+    
+    
     session.add(criar)
+    session.add(Info_id)
+    session.add(pass_id)
     session.commit()
+    session.close()
+    
 
 def check_user(used_email):
     db = create_engine(f"sqlite:///{db_file_path}")
@@ -97,6 +136,7 @@ def check_user(used_email):
         return True    
     elif usere != None:        
         return False
+    session.close()
 
 def check_login(used_email, used_senha):
     db = create_engine(f"sqlite:///{db_file_path}")
@@ -110,6 +150,11 @@ def check_login(used_email, used_senha):
         if (checar_email.email == used_email) and (checar_senha.senha == used_senha):
             return True
     except:
-        return False    
+        return False
+    session.close()
+    
+
+
+        
 base.metadata.create_all(bind=db)
     

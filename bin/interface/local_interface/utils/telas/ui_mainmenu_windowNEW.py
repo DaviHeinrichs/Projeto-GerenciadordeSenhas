@@ -244,10 +244,10 @@ class Ui_MainWindow(object):
         self.exit = QtWidgets.QPushButton(self.centralwidget)
         self.exit.setGeometry(QtCore.QRect(90, 330, 81, 31))
         self.exit.setObjectName("exit")
-        MainWindow.setCentralWidget(self.centralwidget)
+        #MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        #MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)

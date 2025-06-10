@@ -9,8 +9,9 @@ import os, sys
 
 from utils.telas.login_tela import Ui_LoginWindow
 from utils.telas.ui_cadastro_window import Ui_CadastroWindow
-from utils.telas.ui_mainmenu_window import Ui_MainWindow
+from utils.telas.ui_mainmenu_windowNEW import Ui_MainWindow
 from utils.telas.ui_generatePassword_window import Ui_generatePassword_window
+from utils.telas.ui_boasVindas_window import Ui_boasvindas_window
 
 
 class login(QDialog):
@@ -18,7 +19,6 @@ class login(QDialog):
         super(login,self).__init__(*args,**argvs)
         self.ui = Ui_LoginWindow()
         self.ui.setupUi(self)
-        #self.ui.entrarButton.clicked.connect(self.tentar_logar)
         self.ui.entrarButton.clicked.connect(self.entrar)
         self.ui.cadastroButton.clicked.connect(self.tela_cadastro)
     
@@ -56,6 +56,7 @@ class login(QDialog):
         
         
     def tela_cadastro(self):
+        self.hide()
         self.tela = cadastrar_tela()
         self.tela.show()
         
@@ -90,10 +91,7 @@ class tela_gerar(QDialog):
     
     def voltar(self):
         self.hide()
-        
-
-                      
-        
+                
             
 class cadastrar_tela(QDialog):
     def __init__(self,*args,**argvs):
@@ -163,7 +161,9 @@ class cadastrar_tela(QDialog):
         
         if (check_user(email) == True) and (senha == confirme_senha):
             criar_user(nome,sobrenome,email,senha)
-            print("usuário_criado")
+            self.hide()
+            self.tela_gen = boas_vindas()
+            self.tela_gen.show()
             return
         
         elif check_user(email) == False:
@@ -179,7 +179,19 @@ class cadastrar_tela(QDialog):
         else:
             mostrar_erro("Erro no Cadastro!", "Ocorreu um erro inesperado... Tente novamente!")
             return       
-             
+
+class boas_vindas(QDialog):
+    def __init__(self,*args,**argvs):
+        super(boas_vindas,self).__init__(*args,**argvs)
+        self.ui = Ui_boasvindas_window()
+        self.ui.setupUi(self)
+        self.ui.exit.clicked.connect(self.voltar_login)
+        
+    def voltar_login(self):
+        self.hide()
+        self.vol_login = login()
+        self.vol_login.show()
+                     
 app = QApplication(sys.argv)
 if (QDialog.Accepted == True):
     window = login()

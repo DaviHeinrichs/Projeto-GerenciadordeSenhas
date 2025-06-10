@@ -11,10 +11,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_generatePassword_window(object):
-    def setupUi(self, generatePassword_window):
-        generatePassword_window.setObjectName("generatePassword_window")
-        generatePassword_window.resize(372, 298)
+class Ui_boasvindas_window(object):
+    def setupUi(self, boasvindas_window):
+        boasvindas_window.setObjectName("boasvindas_window")
+        boasvindas_window.resize(372, 298)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(115, 115, 115))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -70,11 +70,11 @@ class Ui_generatePassword_window(object):
         brush = QtGui.QBrush(QtGui.QColor(182, 140, 70))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.LinkVisited, brush)
-        generatePassword_window.setPalette(palette)
+        boasvindas_window.setPalette(palette)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        generatePassword_window.setWindowIcon(icon)
-        self.centralwidget = QtWidgets.QWidget(generatePassword_window)
+        boasvindas_window.setWindowIcon(icon)
+        self.centralwidget = QtWidgets.QWidget(boasvindas_window)
         self.centralwidget.setObjectName("centralwidget")
         self.boasvindas = QtWidgets.QLabel(self.centralwidget)
         self.boasvindas.setGeometry(QtCore.QRect(20, 20, 321, 151))
@@ -90,26 +90,26 @@ class Ui_generatePassword_window(object):
         self.exit = QtWidgets.QPushButton(self.centralwidget)
         self.exit.setGeometry(QtCore.QRect(130, 200, 91, 31))
         self.exit.setObjectName("exit")
-        generatePassword_window.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(generatePassword_window)
+        #boasvindas_window.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(boasvindas_window)
         self.statusbar.setObjectName("statusbar")
-        generatePassword_window.setStatusBar(self.statusbar)
+        #boasvindas_window.setStatusBar(self.statusbar)
 
-        self.retranslateUi(generatePassword_window)
-        QtCore.QMetaObject.connectSlotsByName(generatePassword_window)
+        self.retranslateUi(boasvindas_window)
+        QtCore.QMetaObject.connectSlotsByName(boasvindas_window)
 
-    def retranslateUi(self, generatePassword_window):
+    def retranslateUi(self, boasvindas_window):
         _translate = QtCore.QCoreApplication.translate
-        generatePassword_window.setWindowTitle(_translate("generatePassword_window", "BOAS VINDAS!"))
-        self.boasvindas.setText(_translate("generatePassword_window", "<html><head/><body><p align=\"center\">Você foi cadastrado com <span style=\" color:#b68c46;\">sucesso</span>!</p><p align=\"center\">Boas Vindas!</p></body></html>"))
-        self.exit.setText(_translate("generatePassword_window", "ENTRAR"))
+        boasvindas_window.setWindowTitle(_translate("boasvindas_window", "BOAS VINDAS!"))
+        self.boasvindas.setText(_translate("boasvindas_window", "<html><head/><body><p align=\"center\">Você foi cadastrado com <span style=\" color:#b68c46;\">sucesso</span>!</p><p align=\"center\">Boas Vindas!</p></body></html>"))
+        self.exit.setText(_translate("boasvindas_window", "ENTRAR"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    generatePassword_window = QtWidgets.QMainWindow()
-    ui = Ui_generatePassword_window()
-    ui.setupUi(generatePassword_window)
-    generatePassword_window.show()
+    boasvindas_window = QtWidgets.QMainWindow()
+    ui = Ui_boasvindas_window()
+    ui.setupUi(boasvindas_window)
+    boasvindas_window.show()
     sys.exit(app.exec_())
