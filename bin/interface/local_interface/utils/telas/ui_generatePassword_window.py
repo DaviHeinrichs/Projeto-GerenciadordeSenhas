@@ -245,7 +245,7 @@ class Ui_generatePassword_window(object):
         self.Instrucoes.setObjectName("Instrucoes")
         self.senhaOutput = QtWidgets.QLineEdit(self.centralwidget)
         self.senhaOutput.setGeometry(QtCore.QRect(90, 250, 161, 20))
-        self.senhaOutput.setText("")
+        self.senhaOutput.setReadOnly(True)
         self.senhaOutput.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.senhaOutput.setObjectName("senhaOutput")
         self.newPasswordButton = QtWidgets.QPushButton(self.centralwidget)

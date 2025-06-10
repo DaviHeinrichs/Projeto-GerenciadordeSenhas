@@ -12,47 +12,49 @@ from utils.telas.ui_cadastro_window import Ui_CadastroWindow
 from utils.telas.ui_mainmenu_window import Ui_MainWindow
 from utils.telas.ui_generatePassword_window import Ui_generatePassword_window
 
+
 class login(QDialog):
     def __init__(self,*args,**argvs):
         super(login,self).__init__(*args,**argvs)
         self.ui = Ui_LoginWindow()
         self.ui.setupUi(self)
+        #self.ui.entrarButton.clicked.connect(self.tentar_logar)
         self.ui.entrarButton.clicked.connect(self.entrar)
         self.ui.cadastroButton.clicked.connect(self.tela_cadastro)
     
     def entrar(self):
+        from utils.erro_comum import mostrar_erro 
         #Checa os campos
         email = self.ui.emailInput.text()
         senha = self.ui.senhaInput.text()
         
         if not email.strip():
-            self.mostrar_erro("Erro no Login!","Email necessário!")
+            mostrar_erro("Erro no Login!","Email necessário!")
             self.ui.emailInput.setFocus()
             return
-        
-        if not senha.strip():
-            self.mostrar_erro("Erro no Login!","Senha necessária!")
+        elif not senha.strip():
+            mostrar_erro("Erro no Login!","Senha necessária!")
             self.ui.senhaInput.setFocus()
             return
+        else:
+            self.ui.entrarButton.clicked.connect(self.tentar_logar)
+            
+    def tentar_logar(self):
+        from utils.erro_comum import mostrar_erro
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../bin')))
+        from interface.users.user_data.statements.main import check_login
         
-        def abrir_principal(self):
+        email = self.ui.emailInput.text()
+        senha = self.ui.senhaInput.text()
+        if check_login(email,senha) == True:
             self.hide()
             self.tela_p = tela_principal_user()
             self.tela_p.show()
-        abrir_principal(self)
+            print("bemvindo")
+        if check_login(email,senha) == False:
+            mostrar_erro("Erro no Login!","Email ou Senha incorretos!")
         
         
-        
-    def mostrar_erro(self, titulo, mensagem):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Critical)
-        msg.setWindowTitle(titulo)
-        msg.setText(mensagem)
-        msg.exec_()
-        
-        
-        
-    
     def tela_cadastro(self):
         self.tela = cadastrar_tela()
         self.tela.show()
@@ -66,7 +68,6 @@ class tela_principal_user(QDialog):
         self.ui.generateNewPasswordBtn.clicked.connect(self.tela_gerar)
     
     def tela_gerar(self):
-        self.hide()
         self.tela_gen = tela_gerar()
         self.tela_gen.show()
         
@@ -76,34 +77,19 @@ class tela_gerar(QDialog):
         super(tela_gerar,self).__init__(*args,**argvs)
         self.ui = Ui_generatePassword_window()
         self.ui.setupUi(self)
-        #self.ui.newPasswordButton.clicked.connect(self.gerar)
+        self.ui.newPasswordButton.clicked.connect(self.gerar)
+        self.ui.exit.clicked.connect(self.voltar)
         
     def gerar(self):
-        import secrets
-        import string
-        import random
-
-        def gen_sequency ():
-            options = string.ascii_lowercase + string.ascii_uppercase + string.digits + "!@#$%&"
-            senha = ""
-            senha_max = 1
-
-            while senha_max<=12:
-                senha+=(secrets.choice(options))
-                senha_max +=1
-    
-                return senha
-
-        def sequency_mixer(senha):
-            options = list(senha)
-            random.shuffle(options)
-            return ''.join(options)
-            
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../bin')))
+        from utils.password_functions.gen_sequency.main import gen_sequency, sequency_mixer
         sbeta = gen_sequency()
         senha = sequency_mixer(sbeta)
             
         self.ui.senhaOutput.setText(str(senha))
-        
+    
+    def voltar(self):
+        self.hide()
         
 
                       
@@ -114,9 +100,10 @@ class cadastrar_tela(QDialog):
         super(cadastrar_tela,self).__init__(*args,**argvs)
         self.ui = Ui_CadastroWindow()
         self.ui.setupUi(self)
-        self.ui.cadastrarseButton.clicked.connect(self.cadastrar)
-        
-    def cadastrar(self):
+        self.ui.cadastrarseButton.clicked.connect(self.checar_caixa)    
+    
+    def checar_caixa(self):
+        from utils.erro_comum import mostrar_erro
         email = self.ui.emailInput.text()
         senha = self.ui.senhaInput.text()
         confirme_senha = self.ui.senha2Input.text()
@@ -125,53 +112,74 @@ class cadastrar_tela(QDialog):
         
         #checando as caixas
         if not email.strip():
-            self.mostrar_erro("Erro no Cadastro!","Email necessário!")
+            mostrar_erro("Erro no Cadastro!","Email necessário!")
             self.ui.emailInput.setFocus()
             return
         
         if not senha.strip():
-            self.mostrar_erro("Erro no Cadastro!","Senha vazia!")
+            mostrar_erro("Erro no Cadastro!","Senha vazia!")
             self.ui.senhaInput.setFocus()
             return
         
         if not confirme_senha.strip():
-            self.mostrar_erro("Erro no Cadastro!","Você deve confirmar sua senha!")
+            mostrar_erro("Erro no Cadastro!","Você deve confirmar sua senha!")
             self.ui.senha2Input.setFocus()
             return
         
         if not nome.strip():
-            self.mostrar_erro("Erro no Cadastro!","Nome Sobrenome necessários!")
+            mostrar_erro("Erro no Cadastro!","Nome Sobrenome necessários!")
             self.ui.nameInput.setFocus()
             return
         
         if not sobrenome.strip():
-            self.mostrar_erro("Erro no Cadastro!","Nome Sobrenome necessários!")
+            mostrar_erro("Erro no Cadastro!","Nome Sobrenome necessários!")
             self.ui.lastnameInput.setFocus()
             return
-         
-        #checando email
         if ("@" and ".com") in email:
-           return print("boa")
+            self.ui.cadastrarseButton.clicked.connect(self.cadastrar)
         elif (" ") in email:
-            self.mostrar_erro("Erro no Cadastro!", "O email não pode conter espaços!")
+            mostrar_erro("Erro no Cadastro!", "O email não pode conter espaços!")
+            self.ui.emailInput.selectAll()
+            self.ui.emailInput.setFocus()
+            return
+        elif not(("@" and ".com") in email):
+            mostrar_erro("Erro no Cadastro!", "Formato do email incorreto!")
             self.ui.emailInput.selectAll()
             self.ui.emailInput.setFocus()
             return
         else:
-            self.mostrar_erro("Erro no Cadastro!", "Formato de Email Incorreto!")
-            self.ui.emailInput.selectAll()
-            self.ui.emailInput.setFocus()
+            self.cadastrar
+ 
+    def cadastrar(self):
+        from utils.erro_comum import mostrar_erro
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../bin')))
+        from interface.users.user_data.statements.main import criar_user, check_user
+        
+        email = self.ui.emailInput.text()
+        senha = self.ui.senhaInput.text()
+        confirme_senha = self.ui.senha2Input.text()
+        nome = self.ui.nameInput.text() 
+        sobrenome = self.ui.lastnameInput.text()
+        
+        if (check_user(email) == True) and (senha == confirme_senha):
+            criar_user(nome,sobrenome,email,senha)
+            print("usuário_criado")
             return
         
-        
-        
-    def mostrar_erro(self, titulo, mensagem):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Critical)
-        msg.setWindowTitle(titulo)
-        msg.setText(mensagem)
-        msg.exec_()
-        
+        elif check_user(email) == False:
+            self.hide()
+            mostrar_erro("Erro no Cadastro!", "O email já foi utilizado!")
+            self.tela = cadastrar_tela()
+            self.tela.show()
+            
+        elif senha != confirme_senha:
+            mostrar_erro("Erro no Cadastro!", "As senhas são diferentes")
+            self.ui.senhaInput.setFocus()
+            return
+        else:
+            mostrar_erro("Erro no Cadastro!", "Ocorreu um erro inesperado... Tente novamente!")
+            return       
+             
 app = QApplication(sys.argv)
 if (QDialog.Accepted == True):
     window = login()
