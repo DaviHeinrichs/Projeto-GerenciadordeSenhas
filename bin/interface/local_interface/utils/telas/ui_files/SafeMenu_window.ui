@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>myPassword_window</class>
+ <widget class="QMainWindow" name="myPassword_window">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>346</width>
-    <height>430</height>
+    <width>475</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="palette">
@@ -183,19 +183,31 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Que bom te ver novamente por aqui!</string>
+   <string>Boas vindas ao cofre</string>
   </property>
   <property name="windowIcon">
    <iconset>
     <normaloff>CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png</normaloff>CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png</iconset>
   </property>
+  <property name="toolTip">
+   <string/>
+  </property>
+  <property name="whatsThis">
+   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="boasvindas">
+   <widget class="QLabel" name="TextoPrincipal">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>321</width>
+      <x>150</x>
+      <y>-10</y>
+      <width>171</width>
       <height>81</height>
      </rect>
     </property>
@@ -209,7 +221,7 @@
      <enum>Qt::PreventContextMenu</enum>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Olá! O que iremos fazer &lt;span style=&quot; color:#b68c46;&quot;&gt;hoje&lt;/span&gt;?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;- &lt;span style=&quot; color:#b68c46;&quot;&gt;COFRE&lt;/span&gt; -&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="textFormat">
      <enum>Qt::RichText</enum>
@@ -221,25 +233,12 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="newPasswordButton">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>160</y>
-      <width>171</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>GUARDAR UMA NOVA SENHA</string>
-    </property>
-   </widget>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
       <x>-20</x>
       <y>110</y>
-      <width>411</width>
+      <width>521</width>
       <height>20</height>
      </rect>
     </property>
@@ -662,56 +661,216 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="myPasswordsButton">
+   <widget class="QPushButton" name="passwd1Button">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>200</y>
-      <width>171</width>
+      <x>140</x>
+      <y>220</y>
+      <width>191</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>MINHAS SENHAS</string>
+     <string/>
     </property>
-   </widget>
-   <widget class="QPushButton" name="generateNewPasswordBtn">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>240</y>
-      <width>171</width>
-      <height>31</height>
-     </rect>
+    <property name="icon">
+     <iconset>
+      <normaloff>Senha1Icon.png</normaloff>Senha1Icon.png</iconset>
     </property>
-    <property name="text">
-     <string>GERAR NOVA SENHA</string>
+    <property name="iconSize">
+     <size>
+      <width>200</width>
+      <height>50</height>
+     </size>
     </property>
-   </widget>
-   <widget class="QPushButton" name="comoEstaMinhaPass">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>280</y>
-      <width>171</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>COMO ESTÁ MINHA SENHA?</string>
+    <property name="checkable">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="exit">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>330</y>
+      <x>150</x>
+      <y>440</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>VOLTAR</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="exit_2">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>440</y>
       <width>81</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>SAIR</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Instrucoes">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>130</y>
+      <width>321</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Lucida Sans Unicode</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::PreventContextMenu</enum>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Aqui suas senhas estão &lt;/span&gt;&lt;span style=&quot; font-size:11pt; color:#b68c46;&quot;&gt;seguras&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Clique nos &lt;/span&gt;&lt;span style=&quot; font-size:11pt; color:#b68c46;&quot;&gt;campos abaixo&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; e acesse suas senhas!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::RichText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="passwd2Button">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>260</y>
+      <width>191</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>Senha2Icon.png</normaloff>Senha2Icon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>200</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="passwd3Button">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>300</y>
+      <width>191</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>Senha3Icon.png</normaloff>Senha3Icon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>200</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="passwd4Button">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>340</y>
+      <width>191</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>Senha4.png</normaloff>Senha4.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>200</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="passwd5Button">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>380</y>
+      <width>191</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>Senha5Icon.png</normaloff>Senha5Icon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>200</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TextoPrincipal_2">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>50</y>
+      <width>71</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Lucida Sans Unicode</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::PreventContextMenu</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::RichText</enum>
+    </property>
+    <property name="pixmap">
+     <pixmap>safeIcon.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

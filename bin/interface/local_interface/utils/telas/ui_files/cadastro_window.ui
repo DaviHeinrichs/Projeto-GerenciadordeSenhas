@@ -236,6 +236,9 @@
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
+    <property name="placeholderText">
+     <string>Insira seu Nome</string>
+    </property>
    </widget>
    <widget class="QLabel" name="lastName">
     <property name="geometry">
