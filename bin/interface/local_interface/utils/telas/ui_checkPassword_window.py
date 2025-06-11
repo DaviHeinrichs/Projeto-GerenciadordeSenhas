@@ -9,7 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from pathlib import Path
 
+pasta = Path(__file__).parents[5]
+icon_path = (pasta /"config"/"images"/"cipheria_logo.png")
 
 class Ui_checkPassword_window(object):
     def setupUi(self, checkPassword_window):
@@ -72,7 +75,7 @@ class Ui_checkPassword_window(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.LinkVisited, brush)
         checkPassword_window.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(f"{icon_path}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         checkPassword_window.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(checkPassword_window)
         self.centralwidget.setObjectName("centralwidget")
@@ -265,10 +268,10 @@ class Ui_checkPassword_window(object):
         self.InsiraASenha = QtWidgets.QLabel(self.centralwidget)
         self.InsiraASenha.setGeometry(QtCore.QRect(90, 370, 121, 16))
         self.InsiraASenha.setObjectName("InsiraASenha")
-        checkPassword_window.setCentralWidget(self.centralwidget)
+        #checkPassword_window.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(checkPassword_window)
         self.statusbar.setObjectName("statusbar")
-        checkPassword_window.setStatusBar(self.statusbar)
+        #checkPassword_window.setStatusBar(self.statusbar)
 
         self.retranslateUi(checkPassword_window)
         QtCore.QMetaObject.connectSlotsByName(checkPassword_window)

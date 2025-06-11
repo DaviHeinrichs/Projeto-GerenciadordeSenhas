@@ -9,7 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from pathlib import Path
 
+pasta = Path(__file__).parents[5]
+icon_path = (pasta /"config"/"images"/"cipheria_logo.png")
 
 class Ui_CadastroWindow(object):
     def setupUi(self, CadastroWindow):
@@ -72,7 +75,7 @@ class Ui_CadastroWindow(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.LinkVisited, brush)
         CadastroWindow.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("config\images\CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(f"{icon_path}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         CadastroWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(CadastroWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -277,7 +280,7 @@ class Ui_CadastroWindow(object):
         self.Logo.setGeometry(QtCore.QRect(410, 20, 71, 71))
         self.Logo.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.Logo.setText("")
-        self.Logo.setPixmap(QtGui.QPixmap("../project/CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png"))
+        self.Logo.setPixmap(QtGui.QPixmap(f"{icon_path}"))
         self.Logo.setScaledContents(True)
         self.Logo.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.Logo.setObjectName("Logo")

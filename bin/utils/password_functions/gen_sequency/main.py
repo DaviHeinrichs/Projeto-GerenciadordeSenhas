@@ -3,14 +3,27 @@ import string
 import random
 
 def gen_sequency ():
-    options = string.ascii_lowercase + string.ascii_uppercase + string.digits + "!@#$%&"
+    maiúsculas = string.ascii_uppercase
+    minúsculas = string.ascii_lowercase
+    digitos = string.digits 
+    especiais = "!@#$%&"
+    
+    options = minúsculas + maiúsculas + digitos + especiais
+    
     senha = ""
-    senha_max = 1
+    senha += secrets.choice(minúsculas)
+    senha += secrets.choice(maiúsculas)
+    senha += secrets.choice(digitos)
+    senha += secrets.choice(especiais)
     
-    while senha_max<=12:
+    senha_contador = 4
+
+    while senha_contador<=12:
         senha+=(secrets.choice(options))
-        senha_max +=1
-    
+        senha_contador+=1
+        
+            
+
     return senha
 
 def sequency_mixer(senha):

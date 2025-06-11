@@ -9,7 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from pathlib import Path
 
+pasta = Path(__file__).parents[5]
+icon_path = (pasta /"config"/"images"/"cipheria_logo.png")
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -72,7 +75,7 @@ class Ui_MainWindow(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.LinkVisited, brush)
         MainWindow.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(f"{icon_path}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -241,10 +244,10 @@ class Ui_MainWindow(object):
         self.exit = QtWidgets.QPushButton(self.centralwidget)
         self.exit.setGeometry(QtCore.QRect(90, 300, 81, 31))
         self.exit.setObjectName("exit")
-        MainWindow.setCentralWidget(self.centralwidget)
+        #MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        #MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)

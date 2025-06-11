@@ -9,7 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from pathlib import Path
 
+pasta = Path(__file__).parents[5]
+icon_path = (pasta /"config"/"images"/"cipheria_logo.png")
 
 class Ui_generatePassword_window(object):
     def setupUi(self, generatePassword_window):
@@ -72,7 +75,7 @@ class Ui_generatePassword_window(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.LinkVisited, brush)
         generatePassword_window.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(f"{icon_path}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         generatePassword_window.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(generatePassword_window)
         self.centralwidget.setObjectName("centralwidget")

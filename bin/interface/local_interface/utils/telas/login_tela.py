@@ -9,7 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from pathlib import Path
 
+pasta = Path(__file__).parents[5]
+icon_path = (pasta /"config"/"images"/"cipheria_logo.png")
 
 class Ui_LoginWindow(object):
     def setupUi(self, LoginWindow):
@@ -74,7 +77,7 @@ class Ui_LoginWindow(object):
         LoginWindow.setPalette(palette)
         LoginWindow.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("C:/Users/amaro/Documents/Workspace/Projetos/Projeto-GerenciadordeSenhas/config/images/cipheria_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap(f"{icon_path}"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         LoginWindow.setWindowIcon(icon)
         LoginWindow.setAutoFillBackground(False)
         LoginWindow.setInputMethodHints(QtCore.Qt.ImhNone)
@@ -114,7 +117,7 @@ class Ui_LoginWindow(object):
         self.Logo.setGeometry(QtCore.QRect(20, 90, 191, 191))
         self.Logo.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.Logo.setText("")
-        self.Logo.setPixmap(QtGui.QPixmap("C:/Users/amaro/Documents/Workspace/Projetos/Projeto-GerenciadordeSenhas/config/images/cipheria_logo.png"))
+        self.Logo.setPixmap(QtGui.QPixmap(f"{icon_path}"))
         self.Logo.setScaledContents(True)
         self.Logo.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.Logo.setObjectName("Logo")

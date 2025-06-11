@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey, select
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 import os, sys
@@ -77,6 +77,11 @@ class Password(base):
     hash_pass3 = Column("hash_pass3", String, nullable=True)
     hash_pass4 = Column("hash_pass4", String, nullable=True)
     hash_pass5 = Column("hash_pass5", String, nullable=True)
+    where_used1 = Column("where_used1", String)
+    where_used2 = Column("where_used2", String)
+    where_used3 = Column("where_used3", String)
+    where_used4 = Column("where_used4", String)
+    where_used5 = Column("where_used5", String)
     
     def __init__(self, user_id):
         self.user_id = user_id
@@ -216,10 +221,170 @@ def have_masterpassword(used_email):
     tem_master = checar_master.have_master
     session.close()
     return tem_master
+
+def não_tem_senha1(user_email):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
     
+    id = get_id(user_email)
+    checar = session.query(Password).filter_by(user_id=id).first()
+    
+    if checar.pass1 is None:
+        session.close()
+        return True
+    else:
+        session.close()
+        return False
 
     
 
+print(não_tem_senha1("heinrichsdavi@gmail.com"))
+
+def não_tem_senha2(user_email):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    id = get_id(user_email)
+    checar = session.query(Password).filter_by(user_id=id).first()
+    if checar.pass2 is None:
+        session.close()
+        return True
+    else:
+        session.close()
+        return False
+
+def não_tem_senha3(user_email):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    id = get_id(user_email)
+    checar = session.query(Password).filter_by(user_id=id).first()
+    if checar.pass3 is None:
+        session.close()
+        return True
+    else:
+        session.close()
+        return False
+
+def não_tem_senha4(user_email):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    id = get_id(user_email)
+    checar = session.query(Password).filter_by(user_id=id).first()
+    if checar.pass4 is None:
+        session.close()
+        return True
+    else:
+        session.close()
+        return False
+
+def não_tem_senha5(user_email):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    id = get_id(user_email)
+    checar = session.query(Password).filter_by(user_id=id).first()
+    if checar.pass5 is None:
+        session.close()
+        return True
+    else:
+        session.close()
+        return False
+
+
+def get_senha(password_number, user_email):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    id = get_id(user_email)
+    
+    if password_number == "pass1":
+        user = session.query(Password).filter_by(user_id=id).first()
+        user_senha = user.pass1
+        where_used = user.where_used1
+        return user_senha, where_used
+    
+    elif password_number == "pass2":
+        user = session.query(Password).filter_by(user_id=id).first()
+        user_senha = user.pass2
+        where_used = user.where_used2
+        return user_senha, where_used
+    elif password_number == "pass3":
+        user = session.query(Password).filter_by(user_id=id).first()
+        user_senha = user.pass3
+        where_used = user.where_used3
+        return user_senha, where_used
+    
+    elif password_number == "pass4":
+        user = session.query(Password).filter_by(user_id=id).first()
+        user_senha = user.pass4
+        where_used = user.where_used4
+        return user_senha, where_used
+    
+    elif password_number == "pass5":
+        user = session.query(Password).filter_by(user_id=id).first()
+        user_senha = user.pass5
+        where_used = user.where_used5
+        return user_senha, where_used
+    session.close()
+        
+def criar_senha(password_number, user_email, nova_senha, novo_local):
+    from core.hash_gen.main import verification_hash_create
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    id = get_id(user_email)
+    
+    if password_number == "pass1":
+        user_table= session.query(User).filter_by(user_id=id).first()
+        salt = user_table.user_salt
+        user = session.query(Password).filter_by(user_id=id).first()
+        user.pass1 = nova_senha
+        user.where_used1 = novo_local
+        user.hash_pass1 = verification_hash_create(nova_senha,salt)
+    
+    elif password_number == "pass2":
+        user_table = session.query(User).filter_by(user_id=id).first()
+        salt = user_table.user_salt
+        user = session.query(Password).filter_by(user_id=id).first()
+        user.pass2 = nova_senha
+        user.where_used2 = novo_local
+        user.hash_pass2 = verification_hash_create(nova_senha,salt)
+        
+        
+    elif password_number == "pass3":
+        user_table = session.query(User).filter_by(user_id=id).first()
+        salt = user_table.user_salt
+        salt = user_table.user_salt
+        user = session.query(Password).filter_by(user_id=id).first()
+        user.pass3 = nova_senha
+        user.where_used3 = novo_local
+        user.hash_pass3 = verification_hash_create(nova_senha,salt)
+    
+    elif password_number == "pass4":
+        user_table = session.query(User).filter_by(user_id=id).first()
+        salt = user_table.user_salt
+        user = session.query(Password).filter_by(user_id=id).first()
+        user.pass4 = nova_senha
+        user.where_used4 = novo_local
+        user.hash_pass4 = verification_hash_create(nova_senha,salt)
+    
+    elif password_number == "pass5":
+        user_table = session.query(User).filter_by(user_id=id).first()
+        salt = user_table.user_salt
+        user = session.query(Password).filter_by(user_id=id).first()
+        user.pass5 = nova_senha
+        user.where_used5 = novo_local
+        user.hash_pass5 = verification_hash_create(nova_senha,salt)
+    
+    session.commit()
+    session.close()
 
         
 base.metadata.create_all(bind=db)

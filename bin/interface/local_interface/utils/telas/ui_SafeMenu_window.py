@@ -9,9 +9,19 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from pathlib import Path
+
+pasta = Path(__file__).parents[5]
+icon_path = (pasta /"config"/"images"/"cipheria_logo.png")
+senha1_image = (pasta /"config"/"images"/"Senha1Icon.png")
+senha2_image = (pasta /"config"/"images"/"Senha2Icon.png")
+senha3_image = (pasta /"config"/"images"/"Senha3Icon.png")
+senha4_image = (pasta /"config"/"images"/"Senha4.png")
+senha5_image = (pasta /"config"/"images"/"Senha5Icon.png")
+safe_icon = (pasta/"config"/"images"/"safeIcon.png")
 
 
-class Ui_myPassword_window(object):
+class Ui_safemenu_window(object):
     def setupUi(self, myPassword_window):
         myPassword_window.setObjectName("myPassword_window")
         myPassword_window.resize(475, 512)
@@ -72,11 +82,11 @@ class Ui_myPassword_window(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.LinkVisited, brush)
         myPassword_window.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(f"{icon_path}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         myPassword_window.setWindowIcon(icon)
         myPassword_window.setToolTip("")
-        myPassword_window.setDocumentMode(False)
-        myPassword_window.setTabShape(QtWidgets.QTabWidget.Rounded)
+        #myPassword_window.setDocumentMode(False)
+        #myPassword_window.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(myPassword_window)
         self.centralwidget.setObjectName("centralwidget")
         self.TextoPrincipal = QtWidgets.QLabel(self.centralwidget)
@@ -236,7 +246,7 @@ class Ui_myPassword_window(object):
         self.passwd1Button.setGeometry(QtCore.QRect(140, 220, 191, 31))
         self.passwd1Button.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("Senha1Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(f"{senha1_image}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.passwd1Button.setIcon(icon1)
         self.passwd1Button.setIconSize(QtCore.QSize(200, 50))
         self.passwd1Button.setCheckable(False)
@@ -262,7 +272,7 @@ class Ui_myPassword_window(object):
         self.passwd2Button.setGeometry(QtCore.QRect(140, 260, 191, 31))
         self.passwd2Button.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("Senha2Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(f"{senha2_image}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.passwd2Button.setIcon(icon2)
         self.passwd2Button.setIconSize(QtCore.QSize(200, 50))
         self.passwd2Button.setObjectName("passwd2Button")
@@ -270,7 +280,7 @@ class Ui_myPassword_window(object):
         self.passwd3Button.setGeometry(QtCore.QRect(140, 300, 191, 31))
         self.passwd3Button.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("Senha3Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(f"{senha3_image}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.passwd3Button.setIcon(icon3)
         self.passwd3Button.setIconSize(QtCore.QSize(200, 50))
         self.passwd3Button.setObjectName("passwd3Button")
@@ -278,7 +288,7 @@ class Ui_myPassword_window(object):
         self.passwd4Button.setGeometry(QtCore.QRect(140, 340, 191, 31))
         self.passwd4Button.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("Senha4.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(f"{senha4_image}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.passwd4Button.setIcon(icon4)
         self.passwd4Button.setIconSize(QtCore.QSize(200, 50))
         self.passwd4Button.setObjectName("passwd4Button")
@@ -286,7 +296,7 @@ class Ui_myPassword_window(object):
         self.passwd5Button.setGeometry(QtCore.QRect(140, 380, 191, 31))
         self.passwd5Button.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("Senha5Icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(f"{senha5_image}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.passwd5Button.setIcon(icon5)
         self.passwd5Button.setIconSize(QtCore.QSize(200, 50))
         self.passwd5Button.setObjectName("passwd5Button")
@@ -299,15 +309,15 @@ class Ui_myPassword_window(object):
         self.TextoPrincipal_2.setContextMenuPolicy(QtCore.Qt.PreventContextMenu)
         self.TextoPrincipal_2.setText("")
         self.TextoPrincipal_2.setTextFormat(QtCore.Qt.RichText)
-        self.TextoPrincipal_2.setPixmap(QtGui.QPixmap("safeIcon.png"))
+        self.TextoPrincipal_2.setPixmap(QtGui.QPixmap(f"{safe_icon}"))
         self.TextoPrincipal_2.setScaledContents(True)
         self.TextoPrincipal_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.TextoPrincipal_2.setWordWrap(True)
         self.TextoPrincipal_2.setObjectName("TextoPrincipal_2")
-        myPassword_window.setCentralWidget(self.centralwidget)
+        #myPassword_window.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(myPassword_window)
         self.statusbar.setObjectName("statusbar")
-        myPassword_window.setStatusBar(self.statusbar)
+        #myPassword_window.setStatusBar(self.statusbar)
 
         self.retranslateUi(myPassword_window)
         QtCore.QMetaObject.connectSlotsByName(myPassword_window)
@@ -326,7 +336,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     myPassword_window = QtWidgets.QMainWindow()
-    ui = Ui_myPassword_window()
+    ui = Ui_safemenu_window()
     ui.setupUi(myPassword_window)
     myPassword_window.show()
     sys.exit(app.exec_())

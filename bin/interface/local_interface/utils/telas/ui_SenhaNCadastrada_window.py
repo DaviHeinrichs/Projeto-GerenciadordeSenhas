@@ -9,9 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from pathlib import Path
 
+pasta = Path(__file__).parents[5]
+icon_path = (pasta /"config"/"images"/"cipheria_logo.png")
 
-class Ui_generatePassword_window(object):
+class Ui_createpass_window(object):
     def setupUi(self, generatePassword_window):
         generatePassword_window.setObjectName("generatePassword_window")
         generatePassword_window.resize(372, 257)
@@ -72,7 +75,7 @@ class Ui_generatePassword_window(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.LinkVisited, brush)
         generatePassword_window.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(f"{icon_path}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         generatePassword_window.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(generatePassword_window)
         self.centralwidget.setObjectName("centralwidget")
@@ -93,10 +96,10 @@ class Ui_generatePassword_window(object):
         self.exit = QtWidgets.QPushButton(self.centralwidget)
         self.exit.setGeometry(QtCore.QRect(100, 160, 81, 31))
         self.exit.setObjectName("exit")
-        generatePassword_window.setCentralWidget(self.centralwidget)
+        #generatePassword_window.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(generatePassword_window)
         self.statusbar.setObjectName("statusbar")
-        generatePassword_window.setStatusBar(self.statusbar)
+        #generatePassword_window.setStatusBar(self.statusbar)
 
         self.retranslateUi(generatePassword_window)
         QtCore.QMetaObject.connectSlotsByName(generatePassword_window)
@@ -113,7 +116,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     generatePassword_window = QtWidgets.QMainWindow()
-    ui = Ui_generatePassword_window()
+    ui = Ui_createpass_window()
     ui.setupUi(generatePassword_window)
     generatePassword_window.show()
     sys.exit(app.exec_())
