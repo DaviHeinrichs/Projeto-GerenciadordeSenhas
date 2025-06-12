@@ -19,16 +19,16 @@ from utils.telas.ui_DescptPass_window import Ui_decrypt_window
 from utils.telas.ui_myPassword_window import Ui_myPassword_window
 from utils.telas.ui_SenhaNCadastrada_window import Ui_createpass_window
 from utils.telas.ui_createPassword_window import Ui_passcreate_window
-from utils.telas.ui_Admin_window import Ui_admin_window
+from utils.telas.ui_Admin_window import ui_Admin_window
 
 
 
 class tela_admin(QDialog):
     def __init__(self,*args,**argvs):
         super(tela_admin,self).__init__(*args,**argvs)
-        self.ui = Ui_admin_window()
+        self.ui = ui_Admin_window()
         self.ui.setupUi(self)
-        self.ui.exit_2.clicked.connect(self.voltar)
+        self.ui.sair.clicked.connect(self.voltar)
         sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../bin')))
         from interface.users.user_data.statements.main import load_user_table
         

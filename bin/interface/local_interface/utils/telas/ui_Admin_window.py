@@ -9,9 +9,21 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
+import os
+
+def resource_path(relative_path):
+    """Retorna o caminho correto para o recurso, mesmo no .exe."""
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+icon_path = resource_path("config/images/cipheria_logo.png")
 
 
-class Ui_myPassword_window(object):
+class ui_Admin_window(object):
     def setupUi(self, myPassword_window):
         myPassword_window.setObjectName("myPassword_window")
         myPassword_window.resize(475, 512)
@@ -72,11 +84,11 @@ class Ui_myPassword_window(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.LinkVisited, brush)
         myPassword_window.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(f"{icon_path}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         myPassword_window.setWindowIcon(icon)
         myPassword_window.setToolTip("")
-        myPassword_window.setDocumentMode(False)
-        myPassword_window.setTabShape(QtWidgets.QTabWidget.Rounded)
+        #myPassword_window.setDocumentMode(False)
+        #myPassword_window.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(myPassword_window)
         self.centralwidget.setObjectName("centralwidget")
         self.sair = QtWidgets.QPushButton(self.centralwidget)
@@ -136,10 +148,10 @@ class Ui_myPassword_window(object):
         self.UserToAdmin = QtWidgets.QPushButton(self.centralwidget)
         self.UserToAdmin.setGeometry(QtCore.QRect(40, 430, 111, 31))
         self.UserToAdmin.setObjectName("UserToAdmin")
-        myPassword_window.setCentralWidget(self.centralwidget)
+        #myPassword_window.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(myPassword_window)
         self.statusbar.setObjectName("statusbar")
-        myPassword_window.setStatusBar(self.statusbar)
+        #myPassword_window.setStatusBar(self.statusbar)
 
         self.retranslateUi(myPassword_window)
         QtCore.QMetaObject.connectSlotsByName(myPassword_window)
@@ -158,7 +170,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     myPassword_window = QtWidgets.QMainWindow()
-    ui = Ui_myPassword_window()
+    ui = ui_Admin_window()
     ui.setupUi(myPassword_window)
     myPassword_window.show()
     sys.exit(app.exec_())
