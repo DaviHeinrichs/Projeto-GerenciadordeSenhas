@@ -262,6 +262,7 @@ class Ui_checkPassword_window(object):
         self.Instrucoes.setObjectName("Instrucoes")
         self.senhaInput = QtWidgets.QLineEdit(self.centralwidget)
         self.senhaInput.setGeometry(QtCore.QRect(90, 390, 161, 20))
+        self.senhaInput.setEchoMode(QtWidgets.QLineEdit.Password)
         self.senhaInput.setText("")
         self.senhaInput.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.senhaInput.setObjectName("senhaInput")

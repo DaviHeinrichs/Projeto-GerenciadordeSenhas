@@ -110,6 +110,7 @@ class Ui_decrypt_window(object):
         self.eyeIcon.setObjectName("eyeIcon")
         self.senhaMasterInput = QtWidgets.QLineEdit(self.centralwidget)
         self.senhaMasterInput.setGeometry(QtCore.QRect(90, 130, 191, 20))
+        self.senhaMasterInput.setEchoMode(QtWidgets.QLineEdit.Password)
         self.senhaMasterInput.setText("")
         self.senhaMasterInput.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.senhaMasterInput.setObjectName("senhaMasterInput")
