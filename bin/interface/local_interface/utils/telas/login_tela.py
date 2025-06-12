@@ -22,7 +22,7 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-icon_path = resource_path("config/images/cipheria_logo.png")
+icon_path = resource_path("config\images\cipheria_logo.png")
 
 class Ui_LoginWindow(object):
     def setupUi(self, LoginWindow):

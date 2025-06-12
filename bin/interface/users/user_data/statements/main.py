@@ -485,6 +485,40 @@ def criar_senha(password_number, user_email, nova_senha, novo_local):
     session.commit()
     session.close()
 
+def promover_admin(id):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    user = user = session.query(User).filter_by(user_id=id).first()
+    if user:
+        user.role_id = 2
+        session.commit()
+        return True
+    if not user:
+        return False
+
+def deletar_usuário(id):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    user = session.query(User).filter_by(user_id=id).first()
+    info = session.query(Info).filter_by(user_id=id).first()
+    passwords = session.query(Password).filter_by(user_id=id).first()
+    
+    if (user) and (info) and (passwords):
+        session.delete(user)
+        session.delete(info)
+        session.delete(passwords)
+        session.commit()
+        session.close()
+        return True
+    else: 
+        return False
+    
+     
+
 def get_role_id(user_email):
     db = create_engine(f"sqlite:///{db_file_path}")
     Session = sessionmaker(bind=db)
@@ -492,6 +526,7 @@ def get_role_id(user_email):
     
     user = session.query(User).filter_by(email=user_email).first()
     id = user.role_id
+    session.close()
     return id
 
 def load_user_table():
