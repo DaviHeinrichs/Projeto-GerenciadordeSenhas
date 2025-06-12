@@ -1,5 +1,16 @@
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey, MetaData
 from sqlalchemy.orm import sessionmaker, declarative_base
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.backends import default_backend
+import bcrypt
+import base64
+
+
+
+
 
 import os, sys
 from pathlib import Path
@@ -58,6 +69,7 @@ class Info(base):
     user_id = Column("user_id", Integer, ForeignKey("users.user_id"), primary_key=True, nullable=False)
     hash_verify = Column("hash_verify", String, nullable=True)
     key_salt = Column("key_salt", String, nullable=False)
+    key = Column("key", String, nullable=True)
     
     def __init__ (self, user_id, key_salt):
         self.user_id = user_id
@@ -169,6 +181,16 @@ def check_login(used_email, used_senha):
         return False
     session.close()
 
+def get_key_salt(id):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    info = session.query(Info).filter_by(user_id=id).first()
+    key_salt = info.key_salt
+    
+    return key_salt
+
 def get_salt(used_email):
     db = create_engine(f"sqlite:///{db_file_path}")
     Session = sessionmaker(bind=db)
@@ -199,17 +221,66 @@ def turn_havemaster(used_id):
     session.add(alterar)
     session.commit()
     session.close()
+
+def encrypt_password(key, password):
+    import secrets
     
+    
+    iv = secrets.token_bytes(12)
+    
+    # Cria o cifrador
+    cipher = Cipher(
+        algorithms.AES(key),
+        modes.GCM(iv),
+        backend=default_backend()
+    )
+    
+    # Criptografa
+    encryptor = cipher.encryptor()
+    ciphertext = encryptor.update(password.encode()) + encryptor.finalize()
+    
+    # Combina IV + ciphertext + tag
+    encrypted_data = iv + ciphertext + encryptor.tag
+    
+    # Retorna como string base64
+    return base64.b64encode(encrypted_data).decode('utf-8')
+
+def decrypt_password(key, encrypted_password) -> str:
+    
+    encrypted_data = base64.b64decode(encrypted_password)
+    
+    
+    iv = encrypted_data[:12]
+    ciphertext = encrypted_data[12:-16]
+    tag = encrypted_data[-16:]
+    
+    # Cria o cifrador
+    cipher = Cipher(
+        algorithms.AES(key),
+        modes.GCM(iv, tag),
+        backend=default_backend()
+    )
+    
+    # Descriptografa
+    decryptor = cipher.decryptor()
+    decrypted = decryptor.update(ciphertext) + decryptor.finalize()
+    
+    return decrypted.decode('utf-8')
+
 def criar_masterpassword(used_master, used_salt, used_id):
-    from core.hash_gen.main import verification_hash_create
+    from core.hash_gen.main import verification_hash_create, key_gen
     db = create_engine(f"sqlite:///{db_file_path}")
     Session = sessionmaker(bind=db)
     session = Session()
     
+    key_salt = get_key_salt(used_id)
+    
+    new_key = key_gen(used_master, key_salt)
     new_hash = verification_hash_create(used_master, used_salt)
     
     alterar = session.query(Info).filter_by(user_id=used_id).first()
     alterar.hash_verify = new_hash
+    alterar.key = new_key
     session.add(alterar)
     session.commit()
     session.close()
@@ -303,34 +374,42 @@ def get_senha(password_number, user_email):
     session = Session()
     id = get_id(user_email)
     
+    info = session.query(Info).filter_by(user_id=id).first()
+    key = info.key
+    
     if password_number == "pass1":
         user = session.query(Password).filter_by(user_id=id).first()
-        user_senha = user.pass1
+        encrypted = user.pass1
         where_used = user.where_used1
-        return user_senha, where_used
+        decrypted_password = decrypt_password(key, encrypted)
+        return decrypted_password, where_used
     
     elif password_number == "pass2":
         user = session.query(Password).filter_by(user_id=id).first()
-        user_senha = user.pass2
+        encrypted = user.pass2
         where_used = user.where_used2
-        return user_senha, where_used
+        decrypted_password = decrypt_password(key, encrypted)
+        return decrypted_password, where_used
     elif password_number == "pass3":
         user = session.query(Password).filter_by(user_id=id).first()
-        user_senha = user.pass3
+        encrypted = user.pass3
         where_used = user.where_used3
-        return user_senha, where_used
+        decrypted_password = decrypt_password(key, encrypted)
+        return decrypted_password, where_used
     
     elif password_number == "pass4":
         user = session.query(Password).filter_by(user_id=id).first()
-        user_senha = user.pass4
+        encrypted = user.pass4
         where_used = user.where_used4
-        return user_senha, where_used
+        decrypted_password = decrypt_password(key, encrypted)
+        return decrypted_password, where_used
     
     elif password_number == "pass5":
         user = session.query(Password).filter_by(user_id=id).first()
-        user_senha = user.pass5
+        encrypted = user.pass5
         where_used = user.where_used5
-        return user_senha, where_used
+        decrypted_password = decrypt_password(key, encrypted)
+        return decrypted_password, where_used
     session.close()
     
 def verificar_master(password, user_email):
@@ -355,11 +434,17 @@ def criar_senha(password_number, user_email, nova_senha, novo_local):
     session = Session()
     id = get_id(user_email)
     
+    info = session.query(Info).filter_by(user_id=id).first()
+    key = info.key
+
+    encrypted_password = encrypt_password(key, nova_senha)
+
+    
     if password_number == "pass1":
         user_table= session.query(User).filter_by(user_id=id).first()
         salt = user_table.user_salt
         user = session.query(Password).filter_by(user_id=id).first()
-        user.pass1 = nova_senha
+        user.pass1 = encrypted_password
         user.where_used1 = novo_local
         user.hash_pass1 = verification_hash_create(nova_senha,salt)
     
@@ -367,7 +452,7 @@ def criar_senha(password_number, user_email, nova_senha, novo_local):
         user_table = session.query(User).filter_by(user_id=id).first()
         salt = user_table.user_salt
         user = session.query(Password).filter_by(user_id=id).first()
-        user.pass2 = nova_senha
+        user.pass2 = encrypted_password
         user.where_used2 = novo_local
         user.hash_pass2 = verification_hash_create(nova_senha,salt)
         
@@ -377,7 +462,7 @@ def criar_senha(password_number, user_email, nova_senha, novo_local):
         salt = user_table.user_salt
         salt = user_table.user_salt
         user = session.query(Password).filter_by(user_id=id).first()
-        user.pass3 = nova_senha
+        user.pass3 = encrypted_password
         user.where_used3 = novo_local
         user.hash_pass3 = verification_hash_create(nova_senha,salt)
     
@@ -385,7 +470,7 @@ def criar_senha(password_number, user_email, nova_senha, novo_local):
         user_table = session.query(User).filter_by(user_id=id).first()
         salt = user_table.user_salt
         user = session.query(Password).filter_by(user_id=id).first()
-        user.pass4 = nova_senha
+        user.pass4 = encrypted_password
         user.where_used4 = novo_local
         user.hash_pass4 = verification_hash_create(nova_senha,salt)
     
@@ -393,7 +478,7 @@ def criar_senha(password_number, user_email, nova_senha, novo_local):
         user_table = session.query(User).filter_by(user_id=id).first()
         salt = user_table.user_salt
         user = session.query(Password).filter_by(user_id=id).first()
-        user.pass5 = nova_senha
+        user.pass5 = encrypted_password
         user.where_used5 = novo_local
         user.hash_pass5 = verification_hash_create(nova_senha,salt)
     

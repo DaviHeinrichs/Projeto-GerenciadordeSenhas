@@ -3,6 +3,23 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
 import binascii
 
+def key_gen(password,key_salt):
+    salt_hex = key_salt
+    salt_bytes = bytes.fromhex(salt_hex)
+    kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt = salt_bytes,
+        iterations=100000,
+        backend=default_backend()
+    )
+    password_bytes = password.encode('utf-8')
+    key = kdf.derive(password_bytes)
+    
+    return key
+
+
+
 def verification_hash_create(password,used_salt):
     salt_hex = used_salt
     salt_bytes = bytes.fromhex(salt_hex)
