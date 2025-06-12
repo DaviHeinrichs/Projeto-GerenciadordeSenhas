@@ -1,0 +1,13 @@
+instalar as dependências com 
+pip install PyQt5
+pip install SQLAlchemy
+pip install Cryptography
+
+executar o arquivo presente em bin/interface/local interface/main.py
+
+para usar funções de admin:
+adminadilson@gmail.com
+adminadmin
+
+para funções de User:
+criar novo user
