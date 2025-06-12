@@ -19,7 +19,42 @@ from utils.telas.ui_DescptPass_window import Ui_decrypt_window
 from utils.telas.ui_myPassword_window import Ui_myPassword_window
 from utils.telas.ui_SenhaNCadastrada_window import Ui_createpass_window
 from utils.telas.ui_createPassword_window import Ui_passcreate_window
+from utils.telas.ui_Admin_window import Ui_admin_window
 
+
+
+class tela_admin(QDialog):
+    def __init__(self,*args,**argvs):
+        super(tela_admin,self).__init__(*args,**argvs)
+        self.ui = Ui_admin_window()
+        self.ui.setupUi(self)
+        self.ui.exit_2.clicked.connect(self.voltar)
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../bin')))
+        from interface.users.user_data.statements.main import load_user_table
+        
+        dados, User_table = load_user_table()
+        
+        headers = [col.name for col in User_table.columns]
+        model = self.create_table_model(data=dados, headers=headers)
+        self.ui.Tabela.setModel(model)
+        
+    def create_table_model(self, data, headers):
+        from PyQt5.QtGui import QStandardItemModel, QStandardItem
+        
+        model = QStandardItemModel()
+        model.setHorizontalHeaderLabels(headers)
+        
+        model.setRowCount(len(data))
+        for i, row in enumerate(data):
+            for j, col in enumerate(headers):
+                model.setItem(i, j, QStandardItem(str(getattr(row, col))))
+        
+        return model
+    def voltar(self):
+        self.hide()
+        self.tela_l = login()
+        self.tela_l.show()
+        
 class login(QDialog):
     def __init__(self,*args,**argvs):
         super(login,self).__init__(*args,**argvs)
@@ -27,6 +62,7 @@ class login(QDialog):
         self.ui.setupUi(self)
         self.ui.entrarButton.clicked.connect(self.entrar)
         self.ui.cadastroButton.clicked.connect(self.tela_cadastro)
+    
     
     def entrar(self):
         from utils.erro_comum import mostrar_erro 
@@ -48,24 +84,28 @@ class login(QDialog):
     def tentar_logar(self):
         from utils.erro_comum import mostrar_erro
         sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../bin')))
-        from interface.users.user_data.statements.main import check_login, have_masterpassword
+        from interface.users.user_data.statements.main import check_login, have_masterpassword, get_role_id
         
         email = self.ui.emailInput.text()
         senha = self.ui.senhaInput.text()
         if check_login(email,senha) == True:
-            if have_masterpassword(email) == True:
-                self.hide()
-                self.tela_p = tela_principal_user(remail=email)
-                self.tela_p.show()
-                print("bemvindo")
-            elif have_masterpassword(email) == False:
-                self.hide()
-                self.tela_m = criar_masterpassword(remail=email)
-                self.tela_m.show()
-            else:
-                mostrar_erro("Erro no Login!","Ocorreu um erro inesperado!")
+            if get_role_id(user_email=email) == 1:
+                if have_masterpassword(email) == True:
+                    self.hide()
+                    self.tela_p = tela_principal_user(remail=email)
+                    self.tela_p.show()
                 
-        if check_login(email,senha) == False:
+                elif have_masterpassword(email) == False:
+                    self.hide()
+                    self.tela_m = criar_masterpassword(remail=email)
+                    self.tela_m.show()
+                else:
+                    mostrar_erro("Erro no Login!","Ocorreu um erro inesperado!")
+            elif get_role_id(user_email=email) == 2:
+                self.hide()
+                self.tela_admin = tela_admin()
+                self.tela_admin.show()
+        elif check_login(email,senha) == False:
             self.hide()
             mostrar_erro("Erro no Login!","Email ou Senha incorretos!")
             self.tela_l = login()
@@ -118,10 +158,10 @@ class tela_cofre(QDialog):
         self.ui.setupUi(self)
         self.email = remail
         self.ui.passwd1Button.clicked.connect(self.senha1)
-        self.ui.passwd1Button.clicked.connect(self.senha2)
-        self.ui.passwd1Button.clicked.connect(self.senha3)
-        self.ui.passwd1Button.clicked.connect(self.senha4)
-        self.ui.passwd1Button.clicked.connect(self.senha5)
+        self.ui.passwd2Button.clicked.connect(self.senha2)
+        self.ui.passwd3Button.clicked.connect(self.senha3)
+        self.ui.passwd4Button.clicked.connect(self.senha4)
+        self.ui.passwd5Button.clicked.connect(self.senha5)
         self.ui.exit.clicked.connect(self.voltar)
         self.ui.exit_2.clicked.connect(self.sair)
     
@@ -265,15 +305,27 @@ class decrypto_senha(QDialog):
         self.senha = senha
         self.email = remail
         self.ui.revelar.clicked.connect(self.revelar)
+        self.tentativas = 5
         
     def revelar(self):
+        from utils.erro_comum import mostrar_erro
         sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../bin')))
-        from interface.users.user_data.statements.main import get_senha
+        from interface.users.user_data.statements.main import get_senha, verificar_master
+        senha_inserida = self.ui.senhaMasterInput.text()
         
-        user_senha, onde_usada = get_senha(self.senha,self.email)
-        self.hide()
-        self.tela_my = my_password(self.email,user_senha,onde_usada)
-        self.tela_my.show()
+        verify = verificar_master(senha_inserida, self.email)    
+        if verify == True:
+            user_senha, onde_usada = get_senha(self.senha,self.email)
+            self.hide()
+            self.tela_my = my_password(self.email,user_senha,onde_usada)
+            self.tela_my.show()
+        else:   
+            self.tentativas -= 1 
+            if self.tentativas > 0:
+                mostrar_erro("Erro ao mostrar senha!!", f"MASTERPASSWORD INCORRETA!\nVocê possui mais {self.tentativas} tentativas!")
+            else:
+                mostrar_erro("VOCÊ NÃO POSSUI MAIS TENTATIVAS!", "Tente novamente mais tarde!")
+                self.close()
         
 class my_password(QDialog):
     def __init__(self,remail,senha,onde_usada,*args,**argvs):
@@ -284,7 +336,7 @@ class my_password(QDialog):
         self.ui.show_senha.setPlainText(f"{senha}")
         self.ui.show_where.setPlainText(f"{onde_usada}")
         self.ui.exit.clicked.connect(self.voltar_cofre)
-        self.ui.exit_2.clicke.connect(self.voltar_principal)
+        self.ui.exit_2.clicked.connect(self.voltar_principal)
         
     def voltar_principal(self):
         self.hide()

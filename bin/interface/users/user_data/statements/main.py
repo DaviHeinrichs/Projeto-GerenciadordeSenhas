@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey, select
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey, MetaData
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 import os, sys
@@ -157,13 +157,15 @@ def check_login(used_email, used_senha):
     Session = sessionmaker(bind=db)
     session = Session()
     
-    checar_email = session.query(User).filter_by(email=used_email).first()
-    checar_senha = session.query(User).filter_by(senha=used_senha).first()
+    user = session.query(User).filter_by(email=used_email).first()
+    senha = user.senha
+    email = user.email 
     
-    try:
-        if (checar_email.email == used_email) and (checar_senha.senha == used_senha):
-            return True
-    except:
+    if (email == used_email) and (senha == used_senha):
+        
+        return True
+    else:
+        session.close()
         return False
     session.close()
 
@@ -237,9 +239,6 @@ def não_tem_senha1(user_email):
         session.close()
         return False
 
-    
-
-print(não_tem_senha1("heinrichsdavi@gmail.com"))
 
 def não_tem_senha2(user_email):
     db = create_engine(f"sqlite:///{db_file_path}")
@@ -333,6 +332,21 @@ def get_senha(password_number, user_email):
         where_used = user.where_used5
         return user_senha, where_used
     session.close()
+    
+def verificar_master(password, user_email):
+    from core.hash_gen.main import master_verify
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    user = session.query(User).filter_by(email=user_email).first()
+    salt = user.user_salt
+    id = user.user_id
+    Info_user = session.query(Info).filter_by(user_id=id).first()
+    stored_hash = Info_user.hash_verify
+    
+    verificar = master_verify(password,salt,stored_hash)
+    
+    return verificar
         
 def criar_senha(password_number, user_email, nova_senha, novo_local):
     from core.hash_gen.main import verification_hash_create
@@ -385,6 +399,27 @@ def criar_senha(password_number, user_email, nova_senha, novo_local):
     
     session.commit()
     session.close()
+
+def get_role_id(user_email):
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    
+    user = session.query(User).filter_by(email=user_email).first()
+    id = user.role_id
+    return id
+
+def load_user_table():
+    db = create_engine(f"sqlite:///{db_file_path}")
+    Session = sessionmaker(bind=db)
+    session = Session()
+    metadata = MetaData()
+    metadata.reflect(bind=db)
+    tabela = metadata.tables[User.__tablename__]
+    
+    data = session.query(tabela).all()
+    session.close()
+    return data , tabela
 
         
 base.metadata.create_all(bind=db)
