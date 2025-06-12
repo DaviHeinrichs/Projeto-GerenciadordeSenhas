@@ -19,6 +19,8 @@ senha4_image = (pasta /"config"/"images"/"Senha4.png")
 senha5_image = (pasta /"config"/"images"/"Senha5Icon.png")
 safe_icon = (pasta /"config"/"images"/"safeIcon.png")
 
+print(pasta)
+
 
 class Ui_safemenu_window(object):
     def setupUi(self, myPassword_window):

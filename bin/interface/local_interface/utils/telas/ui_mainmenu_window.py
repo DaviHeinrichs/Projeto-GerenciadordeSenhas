@@ -10,19 +10,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pathlib import Path
-import sys
-import os
 
-def resource_path(relative_path):
-    """Retorna o caminho correto para o recurso, mesmo no .exe."""
-    try:
-        base_path = sys._MEIPASS
-    except AttributeError:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-icon_path = resource_path("config/images/cipheria_logo.png")
-
+pasta = Path(__file__).parents[5]
+icon_path = (pasta /"config"/"images"/"cipheria_logo.png")
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
