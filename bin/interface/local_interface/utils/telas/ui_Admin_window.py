@@ -9,12 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from pathlib import Path
 
-pasta = Path(__file__).parents[5]
-icon_path = (pasta /"config"/"images"/"cipheria_logo.png")
 
-class Ui_admin_window(object):
+class Ui_myPassword_window(object):
     def setupUi(self, myPassword_window):
         myPassword_window.setObjectName("myPassword_window")
         myPassword_window.resize(475, 512)
@@ -75,18 +72,18 @@ class Ui_admin_window(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.LinkVisited, brush)
         myPassword_window.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(f"{icon_path}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("CIPHER_A_Logo_with_Cryptographic_Elements-removebg-preview.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         myPassword_window.setWindowIcon(icon)
         myPassword_window.setToolTip("")
-        #myPassword_window.setDocumentMode(False)
-        #myPassword_window.setTabShape(QtWidgets.QTabWidget.Rounded)
+        myPassword_window.setDocumentMode(False)
+        myPassword_window.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(myPassword_window)
         self.centralwidget.setObjectName("centralwidget")
-        self.exit_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.exit_2.setGeometry(QtCore.QRect(180, 450, 111, 31))
-        self.exit_2.setObjectName("exit_2")
+        self.sair = QtWidgets.QPushButton(self.centralwidget)
+        self.sair.setGeometry(QtCore.QRect(320, 430, 111, 31))
+        self.sair.setObjectName("sair")
         self.Tabela = QtWidgets.QTableView(self.centralwidget)
-        self.Tabela.setGeometry(QtCore.QRect(10, 70, 451, 371))
+        self.Tabela.setGeometry(QtCore.QRect(10, 70, 451, 321))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -133,10 +130,16 @@ class Ui_admin_window(object):
         self.boasvindas.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.boasvindas.setWordWrap(True)
         self.boasvindas.setObjectName("boasvindas")
-        #myPassword_window.setCentralWidget(self.centralwidget)
+        self.DeleteUser = QtWidgets.QPushButton(self.centralwidget)
+        self.DeleteUser.setGeometry(QtCore.QRect(180, 430, 111, 31))
+        self.DeleteUser.setObjectName("DeleteUser")
+        self.UserToAdmin = QtWidgets.QPushButton(self.centralwidget)
+        self.UserToAdmin.setGeometry(QtCore.QRect(40, 430, 111, 31))
+        self.UserToAdmin.setObjectName("UserToAdmin")
+        myPassword_window.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(myPassword_window)
         self.statusbar.setObjectName("statusbar")
-        #myPassword_window.setStatusBar(self.statusbar)
+        myPassword_window.setStatusBar(self.statusbar)
 
         self.retranslateUi(myPassword_window)
         QtCore.QMetaObject.connectSlotsByName(myPassword_window)
@@ -145,15 +148,17 @@ class Ui_admin_window(object):
         _translate = QtCore.QCoreApplication.translate
         myPassword_window.setWindowTitle(_translate("myPassword_window", "Seja bem-vindo Magnata!"))
         myPassword_window.setWhatsThis(_translate("myPassword_window", "<html><head/><body><p><br/></p></body></html>"))
-        self.exit_2.setText(_translate("myPassword_window", "SAIR"))
+        self.sair.setText(_translate("myPassword_window", "SAIR"))
         self.boasvindas.setText(_translate("myPassword_window", "<html><head/><body><p>Bem-Vindo <span style=\" color:#b68c46;\">ADM</span>!</p></body></html>"))
+        self.DeleteUser.setText(_translate("myPassword_window", "Deletar Usuário"))
+        self.UserToAdmin.setText(_translate("myPassword_window", "Promover a Admin"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     myPassword_window = QtWidgets.QMainWindow()
-    ui = Ui_admin_window()
+    ui = Ui_myPassword_window()
     ui.setupUi(myPassword_window)
     myPassword_window.show()
     sys.exit(app.exec_())
