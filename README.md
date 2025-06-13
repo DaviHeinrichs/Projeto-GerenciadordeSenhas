@@ -1,39 +1,18 @@
 # Projeto Gerenciador de Senhas
 
-  Esse projeto visa criar uma ferramenta em formato de extensão de navegador que gera e salva senhas de usuários comuns. 
-  A ideia do projeto é aplicar segurança em todos os processos, ajudando o usuário a criar uma "Higiene Digital".
+  Projeto totalmente open-source que surge da Fatec São Caetano do Sul...
+  Criadores: Davi Heinrichs, Gabriel Tagawa, Gerson Hermínio e Walter Neto.
+  Objetivo de tornar mais comum o uso de gerenciadores de senha, até para pessoas que não possuem contato com Tecnologias.
+  Todos estão convidados a testar e reportar bugs, mas lembre-se, estamos apenas começando...
+  Estamos atrás de uma logo para nosso projeto, então se quiser contribuir nesse aspecto também está convidado 😊
+  
+# Tecnologias que foram usadas (Até o momento)
 
-# Fluxo do Sistema (Teoria inicial)
+    Backend: Python + SQLAlchemy + Cryptography.
 
-## 1. Extensão:
+    Segurança: PBKDF2/Argon2 + AES-256 + SHA-256
 
-    O usuário insere a master password.
-
-    A extensão deriva uma chave (usando WASM ou chama o backend).
-
-    Envia a chave criptografada para o FastAPI via HTTPS.
-
-## 2. Backend:
-
-    Valida a requisição com Pydantic.
-
-    Criptografa a senha com AES-256 e armazena no SQLCipher.
-
-    Retorna apenas dados criptografados para a extensão.
-
-## 3. Banco de Dados:
-
-    Todos os dados são armazenados criptografados (até mesmo os metadados).
-
-# Tecnologias que seram usadas (Até o momento)
-
-    Backend: Python + FastAPI + SQLAlchemy + SQLCipher + Cryptography.
-
-    Extensão: JavaScript puro + WebAssembly (opcional) + Chrome API.
-
-    Segurança: PBKDF2/Argon2 + AES-256 + HTTPS + 2FA.
-
-    Banco de Dados: SQLite3 com SQLCipher (encryption at-rest).
+    Banco de Dados: Totalmente criado com SQLAlchemy, baseado em SQLite
 
 
 
@@ -129,27 +108,6 @@
 ### **Fase 3 (Robustez e Escala)**
 - [ ] Implementar 2FA + backups automatizados.  
 - [ ] Adicionar sistema de auditoria.  
-- [ ] Containerizar aplicação com Docker.  
-
+- [ ] Containerizar aplicação com Docker.
+  
 ---
-
-## 📌 **Notas Importantes**
-1. **Ordem Correta**:  
-   - Primeiro o **MVP funcional** (backend + extensão mínima).  
-   - Depois **segurança básica** (HTTPS, SQLCipher).  
-   - Por fim, **otimizações e features avançadas** (2FA, WASM).  
-
-2. **Prioridades**:  
-   - Itens marcados como **"Crítica"** devem ser implementados antes dos demais.  
-   - Features opcionais (ex.: Content Script) podem ser deixadas para versões futuras. 
-
-
-
-
-
-hospedagem:
-
- - firebase (DB users)
- - extensão (Próprio do Chrome)
- - site (Apache)
- - nuvem (Só no futurao)
