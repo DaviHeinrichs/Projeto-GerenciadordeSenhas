@@ -5,6 +5,14 @@
   Objetivo de tornar mais comum o uso de gerenciadores de senha, até para pessoas que não possuem contato com Tecnologias.
   Todos estão convidados a testar e reportar bugs, mas lembre-se, estamos apenas começando...
   Estamos atrás de uma logo para nosso projeto, então se quiser contribuir nesse aspecto também está convidado 😊
+
+  rode o Arquivo main.py presente em "projeto-gerenciadordesenhas/bin/interface/local_interface/" para ter acesso ao programa.
+
+  utilizar o comando "pip install" para baixar:
+  - Requests
+  - SQLAlchemy
+  - PyQt5
+  - Cryptography
   
 # Tecnologias que foram usadas (Até o momento)
 
